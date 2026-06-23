@@ -4,55 +4,56 @@ const MusicContext = createContext();
 
 const songs = [
     {
-    id: 1,
-    title: "Blinding Lights",
-    artist: "The Weeknd",
-    url: "/songs/Blinding Lights - The Weeknd",
-    duration:"3:19",
+        id: 1,
+        title: "Blinding Lights",
+        artist: "The Weeknd",
+        url: "/songs/Blinding Lights - The Weeknd.mp3",
+        duration: "3:19",
     },
     {
         id: 2,
         title: "One of the girls",
         artist: "The Weeknd",
-        url: "/songs/One of the girls - The Weeknd",
-        duration:"4:04",
+        url: "/songs/One of the girls - The Weeknd.mp3",
+        duration: "4:04",
     },
     {
         id: 3,
         title: "Popular",
         artist: "The Weeknd",
-        url: "/songs/Popular - The Weeknd",
-        duration:"3:50",
+        url: "/songs/Popular - The Weeknd.mp3",
+        duration: "3:50",
     },
     {
         id: 4,
         title: "Save Your Tears",
         artist: "The Weeknd",
-        url: "/songs/Save Your Tears - The Weeknd",
-        duration:"3:34",
+        url: "/songs/Save Your Tears - The Weeknd.mp3",
+        duration: "3:34",
     },
     {
         id: 5,
         title: "Starboy",
         artist: "The Weeknd",
-        url: "/songs/Starboy - The Weeknd",
-        duration:"3:50",
+        url: "/songs/Starboy - The Weeknd.mp3",
+        duration: "3:50",
     },
     {
         id: 6,
-        title: "The hills",
+        title: "The Hills",
         artist: "The Weeknd",
-        url: "/songs/The hills - The Weeknd",
-        duration:"2:29",
+        url: "/songs/The Hills - The Weeknd.mp3",
+        duration: "2:29",
     },
     {
         id: 7,
         title: "Timeless",
         artist: "The Weeknd",
-        url: "/songs/Timeless - The Weeknd",
-        duration:"4:15",
+        url: "/songs/Timeless - The Weeknd.mp3",
+        duration: "4:15",
     },
 ];
+
 export const MusicProvider = ({ children }) => {
     const [allSongs, setAllSongs] = useState(songs);
     const [currentTrack, setCurrentTrack] = useState(songs[0]);
@@ -66,8 +67,7 @@ export const MusicProvider = ({ children }) => {
     useEffect(() => {
         const savedPlaylists = localStorage.getItem("musicPlayerPlaylists");
         if (savedPlaylists) {
-            const playlists = JSON.parse(savedPlaylists);
-            setPlaylists(playlists);
+            setPlaylists(JSON.parse(savedPlaylists));
         }
     }, []);
 
@@ -105,10 +105,8 @@ export const MusicProvider = ({ children }) => {
 
     const formatTime = (time) => {
         if (isNaN(time) || time === undefined) return "0:00";
-
         const minutes = Math.floor(time / 60);
         const seconds = Math.floor(time % 60);
-
         return `${minutes}:${seconds.toString().padStart(2, "0")}`;
     };
 
@@ -118,7 +116,6 @@ export const MusicProvider = ({ children }) => {
             name,
             songs: [],
         };
-
         setPlaylists((prev) => [...prev, newPlaylist]);
     };
 
@@ -130,13 +127,11 @@ export const MusicProvider = ({ children }) => {
 
     const addSongToPlaylist = (playlistId, song) => {
         setPlaylists((prev) =>
-            prev.map((playlist) => {
-                if (playlist.id === playlistId) {
-                    return { ...playlist, songs: [...playlist.songs, song] };
-                } else {
-                    return playlist;
-                }
-            })
+            prev.map((playlist) =>
+                playlist.id === playlistId
+                    ? { ...playlist, songs: [...playlist.songs, song] }
+                    : playlist
+            )
         );
     };
 
@@ -174,11 +169,10 @@ export const MusicProvider = ({ children }) => {
     );
 };
 
-export const musicContext = () => {
+export const useMusic = () => {
     const contextValue = useContext(MusicContext);
     if (!contextValue) {
-        throw new Error("musicContext must be used inside of MusicProvider");
+        throw new Error("useMusic must be used inside of MusicProvider");
     }
-
     return contextValue;
 };
