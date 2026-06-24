@@ -1,16 +1,37 @@
-# React + Vite
+<h2 align="center">Musify — Minimal Music Player</h2>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <a href="https://musify-player.vercel.app/">
+    <img src="https://raw.githubusercontent.com/Udayasrisarav/musify/main/public/favicon.png" 
+         alt="Musify App Preview" width="50%" />
+  </a>
+</p>
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
+Musify is a lightweight, browser‑based music player built with **React + Vite**.  
+It allows users to play, pause, skip, and control volume for locally stored songs with a clean, minimal interface.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
+- Play / Pause functionality  
+- Next / Previous track navigation  
+- Progress bar with time formatting  
+- Volume control slider  
+- Responsive design with a dark theme aesthetic  
+- Favicon and branding for a professional look  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+- **React** (functional components, hooks)  
+- **Vite** (fast bundler + dev server)  
+- **JavaScript (ES6+)**  
+- **CSS** (custom styling for player UI)  
+
+---
+
+## Deployment
+Musify is deployed on Vercel: [Live Demo](https://musify-player.vercel.app/)
