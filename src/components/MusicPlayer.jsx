@@ -20,7 +20,6 @@ export const MusicPlayer = () => {
 
     const audioRef = useRef(null);
 
-    // ⏱ Handle manual time change
     const handleTimeChange = (e) => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -29,19 +28,16 @@ export const MusicPlayer = () => {
         setCurrentTime(newTime);
     };
 
-    // 🔊 Handle volume change
     const handleVolumeChange = (e) => {
         const newVolume = parseFloat(e.target.value);
         setVolume(newVolume);
     };
 
-    // 🎚 Sync volume with audio element
     useEffect(() => {
         const audio = audioRef.current;
         if (audio) audio.volume = volume;
     }, [volume]);
 
-    // ▶️ / ⏸ Control playback
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -53,7 +49,6 @@ export const MusicPlayer = () => {
         }
     }, [isPlaying]);
 
-    // 📊 Track progress and metadata
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -73,7 +68,6 @@ export const MusicPlayer = () => {
         };
     }, [setDuration, setCurrentTime, nextTrack]);
 
-    // 🔁 Reset when track changes
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
