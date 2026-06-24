@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useMusic } from "../contexts/MusicContext";
+import { useMusic } from "../contexts/MusicContext.jsx";
 
 export const MusicPlayer = () => {
     const {
@@ -17,8 +17,10 @@ export const MusicPlayer = () => {
         volume,
         setVolume,
     } = useMusic();
+
     const audioRef = useRef(null);
 
+    // ⏱ Handle manual time change
     const handleTimeChange = (e) => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -27,62 +29,54 @@ export const MusicPlayer = () => {
         setCurrentTime(newTime);
     };
 
+    // 🔊 Handle volume change
     const handleVolumeChange = (e) => {
         const newVolume = parseFloat(e.target.value);
         setVolume(newVolume);
     };
 
+    // 🎚 Sync volume with audio element
     useEffect(() => {
         const audio = audioRef.current;
-        if (!audio) return;
-
-        audio.volume = volume;
+        if (audio) audio.volume = volume;
     }, [volume]);
 
+    // ▶️ / ⏸ Control playback
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
 
         if (isPlaying) {
-            audio.play().catch((err) => console.error(err));
+            audio.play().catch((err) => console.error("Playback error:", err));
         } else {
             audio.pause();
         }
     }, [isPlaying]);
 
+    // 📊 Track progress and metadata
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
 
-        const handleLoadedMetadata = () => {
-            setDuration(audio.duration);
-        };
-
-        const handleTimeUpdate = () => {
-            setCurrentTime(audio.currentTime);
-        };
-
-        const handleEnded = () => {
-            nextTrack();
-        };
+        const handleLoadedMetadata = () => setDuration(audio.duration);
+        const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+        const handleEnded = () => nextTrack();
 
         audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-        audio.addEventListener("canplay", handleLoadedMetadata);
         audio.addEventListener("timeupdate", handleTimeUpdate);
         audio.addEventListener("ended", handleEnded);
 
         return () => {
             audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-            audio.removeEventListener("canplay", handleLoadedMetadata);
             audio.removeEventListener("timeupdate", handleTimeUpdate);
             audio.removeEventListener("ended", handleEnded);
         };
-    }, [setDuration, setCurrentTime, currentTrack, nextTrack]);
+    }, [setDuration, setCurrentTime, nextTrack]);
 
+    // 🔁 Reset when track changes
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
-
         audio.load();
         setCurrentTime(0);
         setDuration(0);
@@ -92,12 +86,7 @@ export const MusicPlayer = () => {
 
     return (
         <div className="music-player">
-            <audio
-                ref={audioRef}
-                src={currentTrack.url}
-                preload="metadata"
-                crossOrigin="anonymous"
-            />
+            <audio ref={audioRef} src={currentTrack.url} preload="metadata" />
 
             <div className="track-info">
                 <h3 className="track-title">{currentTrack.title}</h3>
@@ -120,18 +109,14 @@ export const MusicPlayer = () => {
             </div>
 
             <div className="controls">
-                <button className="control-btn" onClick={prevTrack}>
-                    ⏮
-                </button>
+                <button className="control-btn" onClick={prevTrack}>⏮</button>
                 <button
                     className="control-btn play-btn"
                     onClick={() => (isPlaying ? pause() : play())}
                 >
                     {isPlaying ? "⏸" : "▶"}
                 </button>
-                <button className="control-btn" onClick={nextTrack}>
-                    ⏭
-                </button>
+                <button className="control-btn" onClick={nextTrack}>⏭</button>
             </div>
 
             <div className="volume-container">

@@ -6,7 +6,7 @@ export const Navbar = () => {
         <nav className="navbar">
             <div className="navbar-brand">
                 <Link className="brand-link" to="/">
-                    🎵 Music Player
+                    🎵 Musify
                 </Link>
             </div>
 

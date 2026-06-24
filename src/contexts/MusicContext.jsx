@@ -42,7 +42,7 @@ const songs = [
         id: 6,
         title: "The Hills",
         artist: "The Weeknd",
-        url: "/songs/The Hills - The Weeknd.mp3",
+        url: "/songs/The hills - The Weeknd.mp3",
         duration: "2:29",
     },
     {
